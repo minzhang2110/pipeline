@@ -36,6 +36,7 @@ kubectl create -f jenkins
 2. 配置
 ![image](https://raw.githubusercontent.com/512444693/resources/master/pipeline/2.png)
 3. 打开```Blue Ocean```
+
 ![image](https://raw.githubusercontent.com/512444693/resources/master/pipeline/3.png)
 4. 运行
 ![image](https://raw.githubusercontent.com/512444693/resources/master/pipeline/4.png)
