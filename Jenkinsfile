@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        checkout scm
+        // checkout scm
         sh '''
           docker build -t $IMAGE_NAME:$BUILD_ID -f app-example/Dockerfile app-example
         '''
