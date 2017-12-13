@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-example
+  labels:
+    app: app-example
+spec:
+  ports:
+    - port: 80
+      targetPort: 80
+  selector:
+    app: app-example
+    tier: app-example
+  type: NodePort
+---
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: app-example
+  labels:
+    app: app-example
+spec:
+  selector:
+    matchLabels:
+      app: app-example
+      tier: app-example
+  template:
+    metadata:
+      labels:
+        app: app-example
+        tier: app-example
+    spec:
+      containers:
+      - image: localhost:30000/app-example:latest
+        name: app-example
+        ports:
+        - containerPort: 80
+          name: app-example
