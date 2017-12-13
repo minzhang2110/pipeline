@@ -27,7 +27,7 @@ kubectl create -f jenkins
 到集群中任何节点 http://node-ip:30002 访问jenkins
 
 1. 由于jenkins检查是否联网是通过连接google，所以需要配置代理，下载推荐的插件
-
+2. 插件下载完成后，在 插件管理--高级 里将代理删除
 
 ## 创建pipeline
 
