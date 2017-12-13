@@ -1,0 +1,68 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: registry-pv-claim
+  labels:
+    cpp: registry
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: registry-service
+spec:
+  type: NodePort
+  ports:
+  - port: 5000 # service的端口
+    targetPort: 5000 # pod的端口，与port一样的话可以省略
+    nodePort: 30000 # 集群暴露的端口（必须在30000-32767之间）
+    protocol: TCP
+    name: registry
+  - port: 8080
+    nodePort: 30001
+    name: registry-ui
+  selector:
+    app: registry
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: registry-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: registry
+    spec:
+      containers:
+      - name: registry
+        image: registry:2
+        ports:
+        - containerPort: 5000
+        volumeMounts:
+        - name: registry-persistent-storage
+          mountPath: /var/lib/registry
+        - name: docker
+          mountPath: /var/run/docker.sock
+      - name: registryui
+        image: hyper/docker-registry-web
+        ports:
+          - containerPort: 8080
+        env:
+        - name: REGISTRY_URL
+          value: http://localhost:5000/v2
+        - name: REGISTRY_NAME
+          value: cluster-registry
+      volumes:
+      - name: registry-persistent-storage
+        persistentVolumeClaim:
+          claimName: registry-pv-claim
+      - name: docker
+        hostPath:
+          path: /var/run/docker.sock
