@@ -24,7 +24,8 @@ pipeline {
     stage('Production Deployment') {
       steps {
         sh '''
-          sed \'s#\'$IMAGE_NAME\':latest#\'$IMAGE_NAME:$BUILD_ID\'#\' app-example/k8s/deployment.yaml | kubectl apply -f -
+	  sed \'s#\'$IMAGE_NAME\':latest#\'$IMAGE_NAME:$BUILD_ID\'#\' app-example/k8s/deployment.yaml > deployment.yaml
+	  kubectl apply -f deployment.yaml
           kubectl rollout status deployment/app-example
         '''
       }
