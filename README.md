@@ -41,3 +41,12 @@ kubectl create -f jenkins
 
 4. 运行
 ![image](https://raw.githubusercontent.com/512444693/resources/master/pipeline/4.png)
+ 
+## 其它
+ 
+如果需要在gitlab中添加webhook，以达到自动触发构建的目的
+
+1. 在jenkins中下载GitLab Plugin插件
+2. 配置job的Build Triggers，选择```Build when a change is pushed to GitLab. GitLab CI Service URL: http://JENKINS-SERVER/project/JOB-NAME```
+3. 修改jenkins配置，Configure Global Security -- 访问控制 -- 授权策略 -- 任何用户可以做任何事
+4. 在gitlab项目中，Settings -- Integrations 中添加webhook，http://JENKINS-SERVER/project/JOB-NAME
