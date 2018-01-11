@@ -10,7 +10,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: /tmp/data/jenkins/
+    path: /var/jenkins_home
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
