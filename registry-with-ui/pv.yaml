@@ -10,4 +10,4 @@ spec:
   capacity:
     storage: 5Gi
   hostPath:
-    path: /tmp/data/registry
+    path: /var/data/registry
